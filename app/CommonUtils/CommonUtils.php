@@ -9,6 +9,15 @@
 	namespace App\CommonUtils;
 	
 	
+	
 	class CommonUtils {
+		
+		public static function returnString($result){
+			if($result){
+				return 'True';
+			}else{
+				return 'False';
+			}
+		}
 		
 	}
