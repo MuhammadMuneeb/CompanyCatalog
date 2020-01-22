@@ -15,6 +15,8 @@ class CreateCompanyCatalogRelationsTable extends Migration
     {
         Schema::create('company_catalog_relations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('category_id');
             $table->timestamps();
         });
     }
