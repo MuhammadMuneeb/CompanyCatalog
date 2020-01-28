@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.test');
 });
+
+Route::get('add_company', 'CompanyController@addCompanyPage');
