@@ -18,20 +18,13 @@ class CompanyCatalogRelation extends Model
     	return $all;
     }
     
-    public static function addCatCompany($data){
-    	$cat_com = new self;
-    	$i=0;
-    	$result = [];
-    	foreach($data as $datum){
-    		$cat_com->company_id = $datum['company_id'];
-    		$cat_com->category_id = $datum['category_id'][$i];
-    		$i++;
-    		$result[$i] = $cat_com->save();
-    		if(!$result[$i]){
-    			$result[$i] = 'Not saved Id: '. $datum['category_id'][$i];
-		    }
+    public static function addCatCompany($data, $company_id){
+    	for($i=0;$i<count($data);$i++){
+    		self::create([
+    			'company_id'=>$company_id,
+			    'category_id'=>$data[$i]
+		    ]);
 	    }
-	    return $result;
     }
     
     public static function companyToCategory(){
