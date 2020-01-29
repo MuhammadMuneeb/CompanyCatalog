@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::get('add_company', 'CompanyController@addCompanyPage');
+Route::post('save_company', 'CompanyController@saveCompany')->name('saveCompany');
