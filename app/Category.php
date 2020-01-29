@@ -22,18 +22,28 @@ class Category extends Model
     	return $cat;
     }
     
-    public static function addCategory($data){
-    	$cat = new self;
-    	$all_cat = self::allCategory();
-    	foreach($all_cat as $cats){
-    	  if(strcasecmp($cats->category, $data) == 0){
-    	  	return 'Already exists';
-	      }
+    public static function addCategory($data, $company_id){
+    	$all = self::allCategory();
+    	$id = [];
+    	$result= 0;
+    	for($i=0;$i<count($data);$i++){
+	    	$tag_count = $all->where('category', $data[$i])->count();
+	    	if($tag_count == 0){
+	    		$result = self::create(['category'=>$data[$i]]);
+	    		$id[] = $result->id;
+		    }else{
+	    		$id[] = self::getCategoryID($data[$i]);
+		    }
 	    }
-    	$cat->category = $data;
-    	$result = $cat->save();
-    	
-    	return CommonUtils::returnString($result);
+	    
+	    CompanyCatalogRelation::addCatCompany($id, $company_id);
+	    
+	    return $id;
+    }
+    
+    public static function getCategoryID($data){
+      $id = self::where('category', $data)->value('id');
+      return $id;
     }
     
     public static function deleteCategory($id){
