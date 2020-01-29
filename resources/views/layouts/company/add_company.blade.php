@@ -32,26 +32,34 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form role="form">
+                        <form role="form" method="POST" action="{{route('saveCompany')}}">
+                            @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Enter company name">
+                                    <input type="text" class="form-control" id="name" placeholder="Enter company name" name="name">
                                 </div>
                                 <div class="form-group">
                                     <label for="website">Website</label>
-                                    <input type="text" class="form-control" id="website" placeholder="Enter company website">
+                                    <input type="text" class="form-control" id="website" placeholder="Enter company website" name="website">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Enter email">
+                                    <label for="Email">Email address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="text" class="form-control" id="password" placeholder="Enter Password">
+                                    <label for="Password">Password</label>
+                                    <input type="text" class="form-control" id="password" placeholder="Enter Password" name="password">
                                 </div>
-
+                                <div>
+                                    <label for="category">Category</label>
+                                    <select name="category[]" class="select2" multiple="multiple" data-placeholder="Select all that apply" style="width: 100%;">
+                                        @foreach($categories as $category)
+                                        <option>{{$category->category}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                             </div>
                             <!-- /.card-body -->
