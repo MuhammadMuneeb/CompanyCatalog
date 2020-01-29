@@ -31,14 +31,15 @@ class Company extends Model
 	    }else{
     		$company = new self;
 	    }
-	    
 	    $company->name = $data['name'];
 	    $company->website = $data['website'];
-	    $company->username = $data['username'];
+	    $company->username = $data['email'];
 	    $company->password = $data['password'];
 	    $result = $company->save();
-	    
-	    return CommonUtils::returnString($result);
+			
+	    $answers = Category::addCategory($data['category'], $company->id);
+	    return $answers;
+	    return CommonUtils::returnString($answers);
     }
     
     public static function deleteCompany($id){
