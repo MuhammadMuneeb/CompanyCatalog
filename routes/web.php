@@ -15,5 +15,6 @@ Route::get('/', function () {
     return view('layouts.test');
 });
 
+Route::get('all_companies', 'CompanyController@index')->name('allCompanies');
 Route::get('add_company', 'CompanyController@addCompanyPage');
 Route::post('save_company', 'CompanyController@saveCompany')->name('saveCompany');
