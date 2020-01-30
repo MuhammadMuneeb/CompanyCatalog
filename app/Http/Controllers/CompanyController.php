@@ -10,7 +10,8 @@ class CompanyController extends Controller
 {
     public function index(){
     	try{
-    	
+    		$companies = Company::allCompanies();
+    		return view('layouts.company.all_companies')->with(compact('companies'));
 	    }catch(\Exception $exception){
     		return $exception->getMessage().' '.$exception->getLine();
 	    }
@@ -35,25 +36,20 @@ class CompanyController extends Controller
 	    }
 		}
   
-		public function updateCompany(Request $request){
+		public function addKeywordsDesc(Request $request, $company_id){
     	try{
-    	
+    		$data = $request->all();
+    		$result = Company::addKeywordDescription($data, $company_id);
+    		return $result;
 	    }catch(\Exception $exception){
     		return $exception->getMessage().' '.$exception->getLine();
 	    }
 		}
 		
-		public function addCompanyCatPage(){
+		public function deleteCompany($company_id){
     	try{
-    		return view('layouts.company.select_categories');
-	    }catch (\Exception $exception){
-    		return $exception->getMessage();
-	    }
-		}
-		
-		public function deleteCompany(){
-    	try{
-    	
+        $result = Company::deleteCompany($company_id);
+        return $result;
 	    }catch(\Exception $exception){
     		return $exception->getMessage().' '.$exception->getLine();
 	    }
