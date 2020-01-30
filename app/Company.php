@@ -31,8 +31,6 @@ class Company extends Model
 	    }
 	    $company->name = $data['name'];
 	    $company->website = $data['website'];
-	    $company->username = $data['email'];
-	    $company->password = $data['password'];
 	    $result = $company->save();
 			
 	    return CommonUtils::returnString($result);
