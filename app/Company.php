@@ -11,8 +11,6 @@ class Company extends Model
     protected $fillable = [
     	'name',
 	    'website',
-	    'username',
-	    'password'
     ];
     
     public static function allCompanies(){
@@ -37,9 +35,7 @@ class Company extends Model
 	    $company->password = $data['password'];
 	    $result = $company->save();
 			
-	    $answers = Category::addCategory($data['category'], $company->id);
-	    return $answers;
-	    return CommonUtils::returnString($answers);
+	    return CommonUtils::returnString($result);
     }
     
     public static function deleteCompany($id){
