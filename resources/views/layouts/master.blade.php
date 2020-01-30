@@ -73,6 +73,9 @@
             "ordering": true,
             "info": true,
             "autoWidth": false,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
         });
     });
 </script>
