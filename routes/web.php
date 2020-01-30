@@ -19,3 +19,4 @@ Route::get('all_companies', 'CompanyController@index')->name('allCompanies');
 Route::get('add_company', 'CompanyController@addCompanyPage');
 Route::post('save_company', 'CompanyController@saveCompany')->name('saveCompany');
 Route::post('save_key_desc/{id}', 'CompanyController@addKeywordsDesc')->name('saveKeyDesc');
+Route::post('update_company/{id}', 'CompanyController@updateCompany')->name('updateCompany');
