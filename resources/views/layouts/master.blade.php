@@ -72,11 +72,11 @@
     $(function () {
         $('#companies_table').dataTable({
             "paging": true,
-            "lengthChange": false,
+            "lengthChange": true,
             "searching": true,
             "ordering": true,
             "info": true,
-            "autoWidth": false,
+            "autoWidth": true,
             dom: 'Bfrtip',
             buttons: [
                 'csv'
