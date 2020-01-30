@@ -46,6 +46,18 @@ class CompanyController extends Controller
 	    }
 		}
 		
+		
+		public function updateCompany(Request $request, $company_id){
+    	try{
+    		$data = $request->all();
+    		$result = Company::addUpdateCompany($data, $company_id);
+    		return $result;
+	    }catch(\Exception $exception){
+    		return $exception->getMessage().' '.$exception->getLine();
+	    }
+		}
+		
+		
 		public function deleteCompany($company_id){
     	try{
         $result = Company::deleteCompany($company_id);
