@@ -48,7 +48,9 @@
                                     <td>{{$company->keywords}}</td>
                                     <td>{{$company->description}}</td>
                                     <td><a class="btn btn-xs btn-outline-primary" id="approveButton" data-toggle="modal" data-target="#addKeywords" data-id="{{$company->id}}" data-keys="{{$company->keywords}}" data-desc="{{$company->description}}" onclick="getID(this)" ><i class="fa fa-key" title="Keywords and Description"></i></a> |
-                                        <a class="btn btn-xs btn-outline-primary" id="company_update" data-toggle="modal" data-target="#updateCompany" data-id="{{$company->id}}" data-name="{{$company->name}}" data-website="{{$company->website}}" onclick="getIDCompany(this)" ><i class="fa fa-wrench" title="Update Company"></i></a></td>
+                                        <a class="btn btn-xs btn-outline-primary" id="company_update" data-toggle="modal" data-target="#updateCompany" data-id="{{$company->id}}" data-name="{{$company->name}}" data-website="{{$company->website}}" onclick="getIDCompany(this)" ><i class="fa fa-wrench" title="Update Company"></i></a> |
+                                        <a class="btn btn-xs btn-outline-primary" id="company_update" data-toggle="modal" data-target="#deleteCompany" data-id="{{$company->id}}"  onclick="getIDCompanyDelete(this)" ><i class="fas fa-trash" title="Delete Company"></i></a>
+                                    </td>
                                 </tr>
                                 @endforeach
 
@@ -64,6 +66,7 @@
         </section>
         @include('layouts.company.modals.keywords')
         @include('layouts.company.modals.update_company')
+        @include('layouts.company.modals.delete')
         <!-- /.content -->
     </div>
 
@@ -147,5 +150,35 @@
         }
 
 
+        function getIDCompanyDelete(event){
+            var company_id = $(event).data('id');
+            $("#deleteCompanyForm").attr('action', 'delete_company/'+company_id);
+        }
+
+        function deleteCompany(event){
+            event.preventDefault();
+            var url = $("#deleteCompanyForm").attr('action');
+            console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                cache: false,
+                processData: false,
+                // contentType: string,
+                type: 'POST',
+                success: function (dataofconfirm) {
+                    toastr.success("Company Deleted");
+                    // console.log(dataofconfirm);
+                    location.reload();
+                },
+                error:function(){
+                    console.log('Failure');
+                    toastr.error('Failed to Delete');
+                }
+            });
+
+            }
     </script>
 @endsection
