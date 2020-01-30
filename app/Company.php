@@ -11,6 +11,9 @@ class Company extends Model
     protected $fillable = [
     	'name',
 	    'website',
+	    'keywords',
+			'description',
+			'keywords_file'
     ];
     
     public static function allCompanies(){
@@ -39,6 +42,17 @@ class Company extends Model
     public static function deleteCompany($id){
     	$company = self::where('id', $id)->delete();
     	return CommonUtils::returnString($company);
+    }
+    
+    public static function addKeywordDescription($data, $company_id){
+      $company = self::getCompany($company_id);
+      $company->keywords = $data['keywords'];
+      $company->description = $data['description'];
+      //TODO Add file upload
+      $result = $company->save();
+      
+      return CommonUtils::returnString($result);
+      
     }
     
 }
