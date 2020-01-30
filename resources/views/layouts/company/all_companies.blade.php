@@ -47,7 +47,8 @@
                                     <td><a href="{{$company->website}}">{{$company->website}}</a></td>
                                     <td>{{$company->keywords}}</td>
                                     <td>{{$company->description}}</td>
-                                    <td><a class="btn btn-xs btn-outline-primary" id="approveButton" data-toggle="modal" data-target="#addKeywords" data-id="{{$company->id}}" data-keys="{{$company->keywords}}" data-desc="{{$company->description}}" onclick="getID(this)" ><i class="fa fa-key" title="Keywords and Description"></i></a></td>
+                                    <td><a class="btn btn-xs btn-outline-primary" id="approveButton" data-toggle="modal" data-target="#addKeywords" data-id="{{$company->id}}" data-keys="{{$company->keywords}}" data-desc="{{$company->description}}" onclick="getID(this)" ><i class="fa fa-key" title="Keywords and Description"></i></a> |
+                                        <a class="btn btn-xs btn-outline-primary" id="company_update" data-toggle="modal" data-target="#updateCompany" data-id="{{$company->id}}" data-name="{{$company->name}}" data-website="{{$company->website}}" onclick="getIDCompany(this)" ><i class="fa fa-wrench" title="Update Company"></i></a></td>
                                 </tr>
                                 @endforeach
 
@@ -62,6 +63,7 @@
             <!-- /.row -->
         </section>
         @include('layouts.company.modals.keywords')
+        @include('layouts.company.modals.update_company')
         <!-- /.content -->
     </div>
 
@@ -105,5 +107,45 @@
 
         }
 
-</script>
+        function getIDCompany(event){
+            var company_id = $(event).data('id');
+            var name = $(event).data('name');
+            var website = $(event).data('website');
+            console.log(company_id +' '+ name +' '+ website);
+            $("#updateCompanyForm").attr('action', 'update_company/'+company_id);
+            $("#name").val(name);
+            $("#website").val(website);
+        }
+
+        function submitFormCompanyUpdate(event){
+            var myForm = $('#updateCompanyForm');
+            event.preventDefault();
+            var formData = myForm.serialize();
+            var url = $("#updateCompanyForm").attr('action');
+            console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                data: formData,
+                cache: false,
+                processData: false,
+                // contentType: string,
+                type: 'POST',
+                success: function (dataofconfirm) {
+                    toastr.success("Company updated");
+                    // console.log(dataofconfirm);
+                    location.reload();
+                },
+                error:function(){
+                    console.log('Failure');
+                    toastr.error('Failed to update');
+                }
+            });
+
+        }
+
+
+    </script>
 @endsection
