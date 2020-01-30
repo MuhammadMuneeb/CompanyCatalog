@@ -21,6 +21,8 @@ class CreateCompaniesTable extends Migration
             $table->string('password')->length(50)->nullable();
             $table->timestamps();
         });
+        
+        
     }
 
     /**
