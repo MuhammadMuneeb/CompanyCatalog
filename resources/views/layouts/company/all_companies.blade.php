@@ -47,7 +47,7 @@
                                     <td><a href="{{$company->website}}">{{$company->website}}</a></td>
                                     <td>{{$company->keywords}}</td>
                                     <td>{{$company->description}}</td>
-                                    <td>Buttons</td>
+                                    <td><a class="btn btn-xs btn-outline-primary" id="approveButton" data-toggle="modal" data-target="#addKeywords" data-id="{{$company->id}}" data-keys="{{$company->keywords}}" data-desc="{{$company->description}}" onclick="getID(this)" ><i class="fa fa-key" title="Keywords and Description"></i></a></td>
                                 </tr>
                                 @endforeach
 
@@ -61,6 +61,49 @@
             </div>
             <!-- /.row -->
         </section>
+        @include('layouts.company.modals.keywords')
         <!-- /.content -->
     </div>
+
+    <script>
+        function getID(el){
+            var company_id = $(el).data('id');
+            var keys = $(el).data('keys');
+            var desc = $(el).data('desc');
+            console.log(company_id +' '+ keys +' '+ desc);
+            $("#addKeyWordsForm").attr('action', 'save_key_desc/'+company_id);
+            $("#keywords").val(keys);
+            $("#description").val(desc);
+        }
+
+        function submitForm(event){
+            var myForm = $('#addKeyWordsForm');
+            event.preventDefault();
+            var formData = myForm.serialize();
+            var url = $("#addKeyWordsForm").attr('action');
+            console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: url,
+                data: formData,
+                cache: false,
+                processData: false,
+                // contentType: string,
+                type: 'POST',
+                success: function (dataofconfirm) {
+                    toastr.success("Lead status updated");
+                    // console.log(dataofconfirm);
+                    location.reload();
+                },
+                error:function(){
+                    console.log('Failure');
+                    toastr.error('Failed to update status');
+                }
+            });
+
+        }
+
+</script>
 @endsection
