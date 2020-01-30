@@ -14,9 +14,9 @@ class AddKeywordsDescFile extends Migration
     public function up()
     {
         Schema::table('companies', function(Blueprint $table){
-        	$table->string('keywords')->nullable()->length(1000);
-        	$table->string('description')->nullable()->length(1000);
-        	$table->string('keywords_file')->nullable()->length(200);
+        	$table->string('keywords')->nullable()->length(1000)->after('website');
+        	$table->string('description')->nullable()->length(1000)->after('keywords');
+        	$table->string('keywords_file')->nullable()->length(200)->after('description');
         });
     }
 
